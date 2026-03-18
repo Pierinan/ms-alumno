@@ -21,14 +21,17 @@ public class AlumnoServiceImpl implements AlumnoService {
 
     @Override
     public Mono<Void> registrarAlumno(Alumno alumno) {
-        validateAlumnoInput(alumno);
-        return alumnoRepository.existsById(alumno.getIdAlumno())
-                .flatMap(exists -> {
-                    if (exists) {
-                        return Mono.error(new BusinessException(Constants.MSG_ID_DUPLICADO));
-                    }
-                    return alumnoRepository.save(alumno);
-                });
+        return Mono.defer(() -> {
+            validateAlumnoInput(alumno);
+
+            return alumnoRepository.existsById(alumno.getIdAlumno())
+                    .flatMap(exists -> {
+                        if (exists) {
+                            return Mono.error(new BusinessException(Constants.MSG_ID_DUPLICADO));
+                        }
+                        return alumnoRepository.save(alumno);
+                    });
+        });
     }
 
     @Override

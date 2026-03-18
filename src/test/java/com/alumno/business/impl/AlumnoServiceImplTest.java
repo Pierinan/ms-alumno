@@ -58,7 +58,7 @@ class AlumnoServiceImplTest {
                 .thenReturn(Mono.just(true));
 
         //when
-        Mono<Void> result = alumnoRepository.save(alumno);
+        Mono<Void> result = alumnoService.registrarAlumno(alumno);
 
         //then
         StepVerifier.create(result)
