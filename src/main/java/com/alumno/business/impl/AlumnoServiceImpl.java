@@ -28,7 +28,7 @@ public class AlumnoServiceImpl implements AlumnoService {
     }
 
     @Override
-    public Flux<Alumno> getActiveAlumnos() {
+    public Flux<Alumno> getAlumnosActivos() {
         return alumnoRepository.findActivos();
     }
 
