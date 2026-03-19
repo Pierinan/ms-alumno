@@ -71,9 +71,9 @@ class AlumnoServiceImplTest {
     }
 
     @Test
-    void givenBlankName_whenRegisterAlumno_thenReturnError() {
+    void givenInvalidState_whenRegisterAlumno_thenReturnError() {
         // given
-        Alumno alumno = new Alumno("1", "", "Perez", "ACTIVO", 20);
+        Alumno alumno = new Alumno("1", "Peresa", "Perez", "activado", 20);
 
         // when
         Mono<Void> result = alumnoService.registrarAlumno(alumno);
@@ -82,7 +82,7 @@ class AlumnoServiceImplTest {
         StepVerifier.create(result)
                 .expectErrorMatches(throwable ->
                         throwable instanceof BusinessException
-                                && throwable.getMessage().equals(Constants.MSG_NOMBRE_OBLIGATORIO))
+                                && throwable.getMessage().equals(Constants.MSG_ESTADO_INVALIDO))
                 .verify();
 
         verifyNoInteractions(alumnoRepository);

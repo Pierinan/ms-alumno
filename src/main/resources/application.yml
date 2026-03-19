@@ -1,0 +1,14 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /ms-alumnos
+
+logging:
+  level:
+    org.springframework.web: DEBUG
+    org.springframework.web.servlet: DEBUG
+    org.springframework.web.servlet.DispatcherServlet: DEBUG
+    org.springframework.web.servlet.handler: DEBUG
+    org.springframework.web.method: DEBUG
+    com.alumno: DEBUG
+    root: INFO

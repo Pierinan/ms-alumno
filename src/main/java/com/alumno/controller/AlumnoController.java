@@ -2,6 +2,7 @@ package com.alumno.controller;
 
 import com.alumno.business.AlumnoService;
 import com.alumno.controller.schema.Alumno;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,7 +25,7 @@ public class AlumnoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Mono<Void> registrarAlumno(@RequestBody Alumno alumno) {
+    public Mono<Void> registrarAlumno(@Valid @RequestBody Alumno alumno) {
         return alumnoService.registrarAlumno(alumno);
     }
 

@@ -16,20 +16,18 @@ public class AlumnoRepositoryImpl implements AlumnoRepository {
 
     @Override
     public Mono<Boolean> existsById(String id) {
-        return Mono.just(alumnos.containsKey(id));
+        return Mono.defer(() -> Mono.just(alumnos.containsKey(id)));
     }
 
     @Override
     public Flux<Alumno> findActivos() {
-        return Flux.fromStream(
-                alumnos.values().stream()
-                        .filter(alumno -> "activo".equalsIgnoreCase(alumno.getEstado()))
-        );
+        return Flux.fromIterable(alumnos.values())
+                .filter(alumno -> "activo".equalsIgnoreCase(alumno.getEstado()));
     }
 
     @Override
     public Mono<Void> save(Alumno alumno) {
-        alumnos.put(alumno.getIdAlumno(), alumno);
-        return Mono.empty();
+        return Mono.fromRunnable(() -> alumnos.put(alumno.getIdAlumno(), alumno))
+                .then();
     }
 }
