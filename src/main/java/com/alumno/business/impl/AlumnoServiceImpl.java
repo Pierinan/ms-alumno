@@ -23,7 +23,6 @@ public class AlumnoServiceImpl implements AlumnoService {
     public Mono<Void> registrarAlumno(Alumno alumno) {
         return Mono.defer(() -> {
             validateAlumno(alumno);
-
             return alumnoRepository.existsById(alumno.getIdAlumno())
                     .flatMap(exists -> {
                         if (exists) {

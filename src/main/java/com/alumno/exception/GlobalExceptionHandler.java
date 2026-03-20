@@ -23,22 +23,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(errorResponse);
     }
 
-    @ExceptionHandler(WebExchangeBindException.class)
-    public ResponseEntity<ErrorResponse> handleValidationException(WebExchangeBindException ex) {
-        String message = ex.getBindingResult()
-                .getFieldErrors()
-                .stream()
-                .findFirst()
-                .map(FieldError::getDefaultMessage)
-                .orElse("Error de validación");
-
-        ErrorResponse errorResponse = new ErrorResponse(
-                HttpStatus.BAD_REQUEST.value(),
-                message
-        );
-
-        return ResponseEntity.badRequest().body(errorResponse);
-    }
 
     @ExceptionHandler(ServerWebInputException.class)
     public ResponseEntity<ErrorResponse> handleServerWebInputException(ServerWebInputException ex) {
